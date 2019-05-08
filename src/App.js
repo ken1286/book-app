@@ -27,7 +27,7 @@ class App extends React.Component {
   fetchBooks = (event) => {
     event.preventDefault();
     axios
-    .get(`http://openlibrary.org/search.json?q=${this.state.searchValue}`)
+    .get(`https://openlibrary.org/search.json?q=${this.state.searchValue}`)
     .then(response => this.setState({books: response.data.docs}))
     .catch(err => console.log(err));
   }
