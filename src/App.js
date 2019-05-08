@@ -9,35 +9,32 @@ import BookList from './Books/BookList';
 class App extends React.Component {
   constructor() {
     super();
-    this.state = {
-      books: [],
-      searchValue: '',
-      searchInput: ''
-    }
   }
 
-  componentDidMount() {
-    // axios
-    //   .get(`http://openlibrary.org/search.json?q=${this.state.searchValue}`)
-    //   .then(response => console.log(response.data.docs))
-    //   .catch(err => console.log(err));
-    console.log(this.state.books);
-  }
+  // componentDidMount() {
+  //   // axios
+  //   //   .get(`http://openlibrary.org/search.json?q=${this.state.searchValue}`)
+  //   //   .then(response => console.log(response.data.docs))
+  //   //   .catch(err => console.log(err));
+  //   console.log(this.state.books);
+  // }
 
-  fetchBooks = (event) => {
-    event.preventDefault();
-    axios
-    .get(`https://openlibrary.org/search.json?q=${this.state.searchValue}`)
-    .then(response => this.setState({books: response.data.docs}))
-    .catch(err => console.log(err));
-  }
+  // handleChanges = event => {
+  //   event.preventDefault();
+  //   this.setState({
+  //     searchValue: event.target.value,
+  //   })
+  //   console.log(event.target.value);
+  // }
 
-  handleChanges = event => {
-    event.preventDefault();
-    this.setState({
-      searchValue: event.target.value,
+  getISBN = () => {
+    this.state.books.map( book => {
+      if(book.isbn === undefined) {
+        return "none"
+      }
+
+      return book.isbn[0]
     })
-    console.log(event.target.value);
   }
 
   // handleSubmit = event => {
@@ -49,7 +46,7 @@ class App extends React.Component {
     return (
       <div className="App">
         <h1>book app</h1>
-        <form onSubmit={this.fetchBooks}>
+        {/* <form onSubmit={this.fetchBooks}>
           <input
             placeholder="search books"
             value={this.value}
@@ -58,15 +55,13 @@ class App extends React.Component {
           >
           </input>
           <button type="submit" onClick={this.fetchBooks} >submit</button>
-        </form>
-
-        <BookList books={this.state.books} />
+        </form> */}
 
         <Route
-          path="/books:id"
-          render={props => <Book {...props} />}
+          exact
+          path="/"
+          render={props => <BookList {...props} />}
           />
-          {console.log(this.state.books)}
       </div>
     )
   }
